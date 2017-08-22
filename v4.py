@@ -1,6 +1,4 @@
-# In this version I added two exceptions. 
-#The first ValueError is raised when a week has more or fewer days than 7.
-# The second ValueError is raised when a given workout is not in "c". 
+# This is the most recent version of my project. I have a list of 5 workouts and function that calculates the 40 best weeks.
 
 def score_this_week(week):
   c = {
