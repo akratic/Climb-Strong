@@ -10,28 +10,16 @@ def score_this_week(week):
   }
 
   score = 0
-  past_days = []
-
-
+  
   for index, item in enumerate(week):
-    if len(week) != 7:
-        raise ValueError("Week {} has {} days!".format(week, len(week)))
-    if index-1 < 0: 
-      past_days.append([None, None].count(item))
-    elif index-2 < 0:
-  	  past_days.append([None, week[index-1]].count(item)) 
-    else:
-      past_days.append([week[index-2], week[index-1]].count(item))
+    start = max(0, index - 2)
+    relevant = week[start:index]
+    count = relevant.count(item)
+    # the recovery array feels upside down to me. I was expecting 14, 10, 6 not 6, 10, 14
+    backwards = 2 - count
+    delta = c[item]["recovery"][backwards] - c[item]["fatigue"]
+    score += delta
 
-  for workout, past_value in zip(week, past_days):
-    if workout not in c:
-        raise ValueError("({}) is not a workout".format(workout))     
-    elif past_value == 0:
-        score += c[workout]["recovery"][2] - c[workout]["fatigue"]
-    elif past_value == 1:
-        score += c[workout]["recovery"][1] - c[workout]["fatigue"]
-    else:
-        score += c[workout]["recovery"][0] - c[workout]["fatigue"]
   return score
 
 def main():
